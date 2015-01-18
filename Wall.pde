@@ -15,6 +15,6 @@ public class Wall{
 	Cell c1;
 	Cell c2;
 
-	boolean isEdge;
+	boolean isEdge; // Walls that only have one cell
 	boolean isOpen;
 }

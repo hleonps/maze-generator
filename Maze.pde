@@ -11,17 +11,21 @@ public class Maze{
 
 	private void generateMaze(){
 		Cell currentCell = grid[int(random(rows))][int(random(cols))];
+
 		firstCell = currentCell;
 		insertCellToMaze(currentCell, null);
 
 		while (!wallList.isEmpty()) {
 			Wall currentWall = wallList.get(int(random(wallList.size())));
+
 			if(!currentWall.isEdge){
 				if(!(currentWall.c1.isInMaze && currentWall.c2.isInMaze)){
 					currentWall.toOpenWall();
+
 					if(currentWall.c1.isInMaze){
 						insertCellToMaze(currentWall.c2, currentWall);
-					}else{
+					}
+					else{
 						insertCellToMaze(currentWall.c1, currentWall);
 					}
 				}
@@ -29,9 +33,12 @@ public class Maze{
 			wallList.remove(currentWall);
 		}
 
-		endCell = grid[int(random(rows))][int(random(cols))];
+		do{
+			endCell = grid[int(random(rows))][int(random(cols))];
+		} while(firstCell == endCell);
 	}
 
+	//Inserts the cell to the maze and its walls, but skip one of the wall.
 	private void insertCellToMaze(Cell pCell, Wall skipWall){
 		pCell.setIsInMaze();
 		for (Wall wall : pCell.walls) {
@@ -41,15 +48,17 @@ public class Maze{
 		}
 	}
 
+	//Initializes the grid of cells
 	private void generateCells(){
 		for (int i = 0; i < rows; ++i) {
 			for (int j = 0; j < cols; ++j) {
 				grid[i][j] = new Cell(i, j);
 			}
 		}
-		generateWalls();
+		generateWalls(); //Set all the walls of the maze.
 	}
 
+	//Initializes the walls of cells
 	private void generateWalls() {
 		for (int i = 0; i < rows; ++i) {
 			for (int j = 0; j < cols; ++j) {
@@ -60,7 +69,7 @@ public class Maze{
 					grid[i][j].walls[0].c1 = grid[i][j];
 					grid[i][j].walls[0].setIsEdge();
 				}else{
-					grid[i][j].walls[0] = grid[i-1][j].walls[1];
+					grid[i][j].walls[0] = grid[i-1][j].walls[1]; //The top wall is the same that the bottom wall above the cell.
 					grid[i][j].walls[0].c2 = grid[i][j];
 				}
 
@@ -77,7 +86,7 @@ public class Maze{
 					grid[i][j].walls[2].c1 = grid[i][j];
 					grid[i][j].walls[2].setIsEdge();
 				}else{
-					grid[i][j].walls[2] = grid[i][j-1].walls[3];
+					grid[i][j].walls[2] = grid[i][j-1].walls[3]; //The left wall is the same that the right wall of the previous cell.
 					grid[i][j].walls[2].c2 = grid[i][j];
 				}
 
