@@ -1,3 +1,8 @@
+/*
+	Maze Generator by Heiner León | @H_leon12
+	The MIT License (MIT) Copyright (c) 2015 Heiner León
+*/
+
 public class Wall{
 	public Wall(){
 		this.isEdge = false;

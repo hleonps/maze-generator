@@ -1,13 +1,27 @@
+/*
+	Maze Generator by Heiner León | @H_leon12
+	The MIT License (MIT) Copyright (c) 2015 Heiner León
+*/
+
 int WIDTH = 1000; //WIDTH OF THE WINDOW'S SCREEN
 int HEIGHT = 1000; //HEIGHT OF THE WINDOW'S SCREEN
 int CELL_SIZE = 50; //CELL SIDE LENGTH
+
+//COLORS
+color COLOR_START_SQUARE = color(255, 0, 0);
+color COLOR_FINISH_SQUARE = color(0, 0, 255);
+color COLOR_PLAYER_SQUARE = color(0, 255, 0);
 
 Maze maze;
 Player player;
 
 void setup(){
+	//HACK FOR SMALL SCREENS
+	if(displayWidth < WIDTH || displayHeight < HEIGHT){
+		WIDTH = HEIGHT = 500;
+		CELL_SIZE = 25;
+	}
 	size(WIDTH, HEIGHT);
-	stroke(#000000);
 
 	maze = new Maze(WIDTH/CELL_SIZE, HEIGHT/CELL_SIZE); //Adaptive maze, screen size divided by the size of the cell
 	player = new Player(maze.firstCell.x, maze.firstCell.y); // The X & Y of the player are the same that first cell of the maze.
@@ -15,19 +29,26 @@ void setup(){
 
 void draw(){
 	background(#ffffff);
+	strokeWeight(1);
+
 	// First Cell position
-	fill(255, 0, 0);
+	stroke(COLOR_START_SQUARE);
+	fill(COLOR_START_SQUARE);
 	rect(maze.firstCell.y * CELL_SIZE, maze.firstCell.x * CELL_SIZE, CELL_SIZE, CELL_SIZE);
 
 	// Player's position
-	fill(0, 0, 255);
+	stroke(COLOR_PLAYER_SQUARE);
+	fill(COLOR_PLAYER_SQUARE);
 	rect(player.y * CELL_SIZE, player.x * CELL_SIZE, CELL_SIZE, CELL_SIZE);
 
 	// End Cell position
-	fill(0, 255, 0);
+	stroke(COLOR_FINISH_SQUARE);
+	fill(COLOR_FINISH_SQUARE);
 	rect(maze.endCell.y * CELL_SIZE, maze.endCell.x * CELL_SIZE, CELL_SIZE, CELL_SIZE);
 
 	//draw the maze
+	strokeWeight(1.2);
+	stroke(#000000);
 	for (Cell[] cells : maze.grid) {
 		for (Cell cell : cells) {
 			if(!cell.walls[3].isOpen){
