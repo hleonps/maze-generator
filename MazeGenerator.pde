@@ -3,9 +3,9 @@
 	The MIT License (MIT) Copyright (c) 2015 Heiner León
 */
 
-int WIDTH = 1000; //WIDTH OF THE WINDOW'S SCREEN
-int HEIGHT = 1000; //HEIGHT OF THE WINDOW'S SCREEN
-int CELL_SIZE = 50; //CELL SIDE LENGTH
+int WIDTH = 500; //WIDTH OF THE WINDOW'S SCREEN
+int HEIGHT = 500; //HEIGHT OF THE WINDOW'S SCREEN
+int CELL_SIZE = 25; //CELL SIDE LENGTH
 
 //COLORS
 color COLOR_START_SQUARE = color(255, 0, 0);
@@ -16,14 +16,7 @@ Maze maze;
 Player player;
 
 void setup(){
-	//HACK FOR SMALL SCREENS
-	if(displayWidth < WIDTH || displayHeight < HEIGHT){
-		WIDTH = HEIGHT = 500;
-		CELL_SIZE = 25;
-		size(500, 500);
-	} else{
-		size(1000, 1000);
-	}
+	size(500, 500);
 
 	maze = new Maze(WIDTH/CELL_SIZE, HEIGHT/CELL_SIZE); //Adaptive maze, screen size divided by the size of the cell
 	player = new Player(maze.firstCell.x, maze.firstCell.y); // The X & Y of the player are the same that first cell of the maze.
